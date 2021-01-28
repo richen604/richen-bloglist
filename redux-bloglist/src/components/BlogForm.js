@@ -1,10 +1,14 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react'
+import { hideNotify, showNotify } from '../reducers/notificationReducer'
+import {createBlog} from '../reducers/blogReducer'
+import { useDispatch } from 'react-redux'
 
-export default function BlogForm({ createBlog, user, setErrorMessage }) {
+export default function BlogForm({ user }) {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
+  const dispatch = useDispatch()
 
   const handleTitleChange = (event) => {
     event.preventDefault()
@@ -23,21 +27,23 @@ export default function BlogForm({ createBlog, user, setErrorMessage }) {
 
   const addBlog = (event) => {
     event.preventDefault()
-    createBlog({
+    dispatch(createBlog({
       name: user.name,
       title: title,
       author: author,
       url: url,
-    })
+    }))
 
-    setErrorMessage(`A new blog ${title} added!`)
+    dispatch(showNotify(`A new blog ${title} added!`, 'green'))
     setTimeout(() => {
-      setErrorMessage(null)
-    }, 5000)
+      dispatch(hideNotify())
+    }, 5000);
     setTitle('')
     setAuthor('')
     setUrl('')
   }
+
+  
   return (
     <div>
       <h2>Create a New Blog</h2>

@@ -1,54 +1,37 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { updateBlog, removeBlog} from '../reducers/blogReducer'
 
-const BlogDetails = ({ blog, updateBlog, user, deleteBlog, setBlogView }) => {
-  const [thisBlog, setThisBlog] = useState(blog)
-
+const BlogDetails = ({ blog, user, setBlogView }) => {
+  const dispatch = useDispatch()
   const handleBlogLike = (event) => {
     event.preventDefault()
-    updateBlog({
-      id: thisBlog.id,
-      title: thisBlog.title,
-      author: thisBlog.author,
-      url: thisBlog.url,
-      likes: thisBlog.likes + 1,
-      user: thisBlog.user,
-    })
-
-    setBlogView((blogView) => !blogView)
-
-    setThisBlog({
-      id: thisBlog.id,
-      title: thisBlog.title,
-      author: thisBlog.author,
-      url: thisBlog.url,
-      likes: thisBlog.likes + 1,
-      user: thisBlog.user,
-    })
+    dispatch(updateBlog({ ...blog, likes: blog.likes + 1 }))
   }
 
   const handleBlogDelete = (event) => {
     event.preventDefault()
-    if (window.confirm(`Do you really want to delete ${thisBlog.title}?`)) {
-      deleteBlog(thisBlog.id, user.token)
+    if (window.confirm(`Do you really want to delete ${blog.title}?`)) {
+      dispatch(removeBlog(blog, user.token))
       setBlogView((blogView) => !blogView)
     }
     return
   }
 
   //Added a return for if the blog was not created by a user
-  if (!thisBlog.user || user.id !== thisBlog.user.id) {
+  if (!blog.user || user.id !== blog.user.id) {
     return (
       <>
         <div className="likeOutput">
-          Likes: {thisBlog.likes}{' '}
+          Likes: {blog.likes}
           <button className="likeButton" onClick={handleBlogLike}>
             like
           </button>
         </div>
         <div>
           Url:
-          <a href={thisBlog.url}>{thisBlog.url}</a>
+          <a href={blog.url}>{blog.url}</a>
         </div>
       </>
     )
@@ -57,14 +40,14 @@ const BlogDetails = ({ blog, updateBlog, user, deleteBlog, setBlogView }) => {
   return (
     <>
       <div className="likeOutput">
-        Likes: {thisBlog.likes}{' '}
+        Likes: {blog.likes}{' '}
         <button className="likeButton" onClick={handleBlogLike}>
           like
         </button>
       </div>
       <div>
         Url:
-        <a href={thisBlog.url}>{thisBlog.url}</a>
+        <a href={blog.url}>{blog.url}</a>
       </div>
       <div>
         <button onClick={handleBlogDelete}>Delete Blog</button>
@@ -72,7 +55,7 @@ const BlogDetails = ({ blog, updateBlog, user, deleteBlog, setBlogView }) => {
     </>
   )
 }
-const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
+const Blog = ({ blog, user }) => {
   const [blogView, setBlogView] = useState(false)
 
   const handleViewChange = (event) => {
@@ -119,7 +102,7 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
           View Details
         </button>
       </div>
-      <BlogDetails {...{ blog, user, updateBlog, deleteBlog, setBlogView }} />
+      <BlogDetails {...{ blog, user, setBlogView }} />
     </li>
   )
 }

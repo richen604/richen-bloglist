@@ -19,7 +19,9 @@ test('renders content', () => {
   expect(component.container).toHaveTextContent('Brad Frost')
 
   //Does not render url
-  expect(component.container).not.toHaveTextContent('https://bradfrost.com/blog/post/atomic-web-design/')
+  expect(component.container).not.toHaveTextContent(
+    'https://bradfrost.com/blog/post/atomic-web-design/',
+  )
   //Does not render likes
   expect(component.container).not.toHaveTextContent('4')
 })
@@ -54,7 +56,6 @@ test('renders content', () => {
 })*/
 
 test('Blog component button renders likes and url when clicked', () => {
-
   const blog = {
     title: 'Atomic Design',
     author: 'Brad Frost',
@@ -67,6 +68,8 @@ test('Blog component button renders likes and url when clicked', () => {
   const button = component.getByText('View Details')
   fireEvent.click(button)
 
-  expect(component.container).toHaveTextContent('https://bradfrost.com/blog/post/atomic-web-design/')
+  expect(component.container).toHaveTextContent(
+    'https://bradfrost.com/blog/post/atomic-web-design/',
+  )
   expect(component.container).toHaveTextContent('4')
 })

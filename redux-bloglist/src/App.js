@@ -4,12 +4,16 @@ import Blog from './components/Blog'
 import Login from './components/Login'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
+import { useDispatch, useSelector } from 'react-redux'
+import { initBlogs } from './reducers/blogReducer'
+import { hideNotify, showNotify } from './reducers/notificationReducer'
+import { setUser, logoutUser } from './reducers/userReducer'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
 // eslint-disable-next-line react/prop-types
 const Notification = ({ message, color }) => {
-  if (message === null) {
+  if (!message) {
     return null
   }
 
@@ -21,82 +25,56 @@ const Notification = ({ message, color }) => {
 }
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
-  const [errorMessage, setErrorMessage] = useState(null)
-  const [errorColor, setErrorColor] = useState('green')
+  const dispatch = useDispatch()
+  const blogs = useSelector((state) => state.blogs)
+  const notify = useSelector((state) => state.notify)
 
   const blogFormRef = useRef()
 
   useEffect(() => {
-    blogService
-      .getAll()
-      .then((blogs) => setBlogs(blogs.sort((a, b) => a.likes < b.likes)))
-  }, [])
+    dispatch(initBlogs())
+  }, [dispatch])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
+      dispatch(setUser(user))
       blogService.setToken(user.token)
-    }
+    } else return
   }, [])
+
+  //BUG State changes when inputting fields
+  const user = useSelector((state) => state.user)
 
   const handleLogin = async (event) => {
     event.preventDefault()
+    let loginUser
     try {
-      const user = await loginService.login({ username, password })
-      window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(user))
-      blogService.setToken(user.token)
-      setUser(user)
+      loginUser = await loginService.login({ username, password })
+      window.localStorage.setItem(
+        'loggedBlogAppUser',
+        JSON.stringify(loginUser),
+      )
+      blogService.setToken(loginUser.token)
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setErrorMessage('Wrong Username or Password')
-      setErrorColor('red')
-      setTimeout(() => {
-        setErrorMessage(null)
-        setErrorColor('green')
-      }, 5000)
+      dispatch(showNotify('Wrong Username or Password', 'red'))
+      setTimeout(() => dispatch(hideNotify()), 5000)
     }
+    if (loginUser) dispatch(setUser(loginUser))
   }
 
   const handleLogout = async (event) => {
     event.preventDefault()
     if (user) {
-      window.localStorage.removeItem('loggedBlogAppUser')
-      setUser(null)
+      dispatch(logoutUser())
       setUsername('')
       setPassword('')
     }
-  }
-
-  const addBlog = (blogObj) => {
-    blogFormRef.current.toggleVisibility()
-    blogService.create(blogObj).then((returnedBlog) => {
-      const blogsCopy = blogs.concat([returnedBlog])
-      return setBlogs(blogsCopy.sort((a, b) => a.likes < b.likes))
-    })
-  }
-
-  const updateBlog = (blogObj) => {
-    blogService.update(blogObj.id, blogObj).then((returnedBlog) => {
-      const blogsCopy = [...blogs]
-      const oldBlog = blogsCopy.find((blog) => blog.id === returnedBlog.id)
-      oldBlog.likes = returnedBlog.likes
-      return setBlogs(blogsCopy.sort((a, b) => a.likes < b.likes))
-    })
-  }
-
-  const deleteBlog = (id, userToken) => {
-    blogService.remove(id, userToken).then(() => {
-      const blogsCopy = [...blogs]
-      const newBlogs = blogsCopy.filter((blog) => blog.id !== id)
-      return setBlogs(newBlogs.sort((a, b) => a.likes < b.likes))
-    })
   }
 
   const loginForm = () => (
@@ -113,7 +91,7 @@ const App = () => {
 
   const blogForm = () => (
     <Togglable buttonLabel="New Blog" ref={blogFormRef}>
-      <BlogForm createBlog={addBlog} {...{ setErrorMessage, user }} />
+      <BlogForm {...{ user }} />
     </Togglable>
   )
 
@@ -121,7 +99,7 @@ const App = () => {
     return (
       <div>
         <h1>Blog List Application</h1>
-        <Notification message={errorMessage} color={errorColor} />
+        <Notification message={notify.msg} color={notify.color} />
         {loginForm()}
       </div>
     )
@@ -130,7 +108,7 @@ const App = () => {
   return (
     <div>
       <h1>Blog List Application</h1>
-      <Notification message={errorMessage} color={errorColor} />
+      <Notification message={notify.msg} color={notify.color} />
       {user === null ? (
         loginForm()
       ) : (
@@ -144,7 +122,7 @@ const App = () => {
       )}
       <ul id="blogList">
         {blogs.map((blog, i) => (
-          <Blog key={i} {...{ blog, user, updateBlog, deleteBlog }} />
+          <Blog key={i} {...{ blog, user }} />
         ))}
       </ul>
     </div>

@@ -54,7 +54,8 @@ blogsRouter.post('/', async (request, response) => {
   user.blogs = user.blogs.concat(result._id)
 
   await user.save()
-  response.status(201).json(blog)
+  
+  response.status(201).json(result)
 })
 
 blogsRouter.delete('/:id', async (request, response) => {
@@ -78,6 +79,7 @@ blogsRouter.delete('/:id', async (request, response) => {
 
 blogsRouter.put('/:id', async (request, response) => {
   const body = request.body
+  console.log(request.body)
 
   const blog = {
     id: request.params.id,
@@ -85,6 +87,7 @@ blogsRouter.put('/:id', async (request, response) => {
     author: body.author,
     url: body.url,
     likes: body.likes,
+    //user: body.user,
   }
 
   const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, {

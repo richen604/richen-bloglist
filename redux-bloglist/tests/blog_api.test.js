@@ -122,7 +122,7 @@ describe('addition of a new blog', () => {
     const response = await api.get('/api/blogs')
 
     const postedBlog = response.body.find(
-      (blog) => blog.title === 'Atomic Design'
+      (blog) => blog.title === 'Atomic Design',
     )
 
     expect(postedBlog.likes).toBe(0)

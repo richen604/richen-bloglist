@@ -58,7 +58,7 @@ const mostBlogs = (blogs) => {
   const mostBlogsArr = newBlogsArr.sort(
     (a, b) =>
       newBlogsArr.filter((v) => v === a).length -
-      newBlogsArr.filter((v) => v === b).length
+      newBlogsArr.filter((v) => v === b).length,
   )
   const mostBlogsAuthor = [...mostBlogsArr].pop()
 
