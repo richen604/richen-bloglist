@@ -1,12 +1,12 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
-import { removeBlog, updateBlog } from '../reducers/blogReducer'
+import { removeBlog, updateBlog, commentBlog } from '../reducers/blogReducer'
 import Header from './Header'
 
- export default function SingleBlogPage() {
-   const dispatch = useDispatch()
-   const history = useHistory()
+export default function SingleBlogPage() {
+  const dispatch = useDispatch()
+  const history = useHistory()
   const blogs = useSelector((state) => state.blogs)
   const user = useSelector((state) => state.user)
 
@@ -28,39 +28,65 @@ import Header from './Header'
     return
   }
 
+  const handleBlogComment = (event) => {
+    event.preventDefault()
+    dispatch(commentBlog(blog, {content: event.target.commentInput.value} ))
+  }
 
-  if (!blog) 
-    return (
-        <div>
-          <Header />
-          <div>Blog Not Found</div>
-        </div>
-      )
-
-  if(blog.user.id === user.id) return (
-    <div>
-          <Header />
-          <h3>{blog.title}</h3>
-          <div>
-              <a href={blog.url}>{blog.url}</a> <br />
-              Likes: {blog.likes} <button onClick={() => handleBlogLike()}>Like</button> <br/>
-              {blog.user.name} <br />
-              <button onClick={handleBlogDelete}>Delete Blog</button>
-          </div>
-      </div>
+  const CommentForm = () => (
+    <form id="commentForm" onSubmit={handleBlogComment}>
+      Comment: <input id="commentInput" name='content'  /> <button type='submit'>Comment</button>
+    </form>
   )
+
+  const CommentDisplay = () => (
+    <>
+      <h4>Comments</h4>
+      <ul>
+        {blog.comments.map((comment, index) => (
+          <li key={index}>{comment}</li>
+        ))}
+      </ul>
+    </>
+  )
+
+  if (!blog)
+    return (
+      <div>
+        <Header />
+        <div>Blog Not Found</div>
+      </div>
+    )
+
+  if (blog.user.id === user.id)
+    return (
+      <div>
+        <Header />
+        <h3>{blog.title}</h3>
+        <div>
+          <a href={blog.url}>{blog.url}</a> <br />
+          Likes: {blog.likes}{' '}
+          <button onClick={() => handleBlogLike()}>Like</button> <br />
+          {blog.user.name} <br />
+          <button onClick={handleBlogDelete}>Delete Blog</button>
+        </div>
+        <CommentForm />
+        <CommentDisplay />
+      </div>
+    )
 
   return (
+    <div>
+      <Header />
+      <h3>{blog.title}</h3>
       <div>
-          <Header />
-          <h3>{blog.title}</h3>
-          <div>
-              <a href={blog.url}>{blog.url}</a> <br />
-              Likes: {blog.likes} <button onClick={handleBlogLike}>Like</button> <br/>
-              {blog.user.name} <br />
-          </div>
+        <a href={blog.url}>{blog.url}</a> <br />
+        Likes: {blog.likes} <button onClick={handleBlogLike}>Like</button>{' '}
+        <br />
+        {blog.user.name} <br />
       </div>
+      <CommentForm />
+      <CommentDisplay />
+    </div>
   )
 }
-
-

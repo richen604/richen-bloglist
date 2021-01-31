@@ -45,6 +45,18 @@ export const removeBlog = (blogObj, userToken) => {
   }
 }
 
+export const commentBlog = (blogObj, comment) => {
+  return async (dispatch) => {
+    const newBlog = await blogService.comment(blogObj.id, comment)
+    dispatch({
+      type: 'UPDATE_BLOG',
+      data: {
+        blog: newBlog,
+      }
+    })
+  }
+}
+
 const blogReducer = (state = [], action) => {
   switch (action.type) {
     case 'INIT_BLOGS':
