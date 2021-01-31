@@ -7,29 +7,16 @@ import BlogForm from './components/BlogForm'
 import { useDispatch, useSelector } from 'react-redux'
 import { initBlogs } from './reducers/blogReducer'
 import { hideNotify, showNotify } from './reducers/notificationReducer'
-import { setUser, logoutUser } from './reducers/userReducer'
+import { setUser } from './reducers/userReducer'
 import blogService from './services/blogs'
 import loginService from './services/login'
-
-// eslint-disable-next-line react/prop-types
-const Notification = ({ message, color }) => {
-  if (!message) {
-    return null
-  }
-
-  return (
-    <div className="error" style={{ color: color }}>
-      {message}
-    </div>
-  )
-}
+import Header from './components/Header'
 
 const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
   const blogs = useSelector((state) => state.blogs)
-  const notify = useSelector((state) => state.notify)
 
   const blogFormRef = useRef()
 
@@ -68,15 +55,6 @@ const App = () => {
     if (loginUser) dispatch(setUser(loginUser))
   }
 
-  const handleLogout = async (event) => {
-    event.preventDefault()
-    if (user) {
-      dispatch(logoutUser())
-      setUsername('')
-      setPassword('')
-    }
-  }
-
   const loginForm = () => (
     <Togglable buttonLabel="login">
       <Login
@@ -95,36 +73,25 @@ const App = () => {
     </Togglable>
   )
 
-  if (!user) {
-    return (
-      <div>
-        <h1>Blog List Application</h1>
-        <Notification message={notify.msg} color={notify.color} />
-        {loginForm()}
-      </div>
-    )
-  }
-
   return (
     <div>
-      <h1>Blog List Application</h1>
-      <Notification message={notify.msg} color={notify.color} />
+      <Header />
+
       {user === null ? (
         loginForm()
       ) : (
         <div>
-          <p>{user.name} logged in</p>
-          <button type="submit" onClick={handleLogout}>
-            logout
-          </button>
+          <h2>Blogs</h2>
           {blogForm()}
+          <div>
+            <ul id="blogList">
+              {blogs.map((blog, i) => (
+                <Blog key={i} {...{ blog, user }} />
+              ))}
+            </ul>
+          </div>
         </div>
       )}
-      <ul id="blogList">
-        {blogs.map((blog, i) => (
-          <Blog key={i} {...{ blog, user }} />
-        ))}
-      </ul>
     </div>
   )
 }
