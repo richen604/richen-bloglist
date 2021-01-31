@@ -1,9 +1,25 @@
-.error {
-  color: green;
-  background: lightgrey;
-  font-size: 20px;
-  border-style: solid;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
+
+#notification {
+    width: 400px;
+}
+
+#bloglist-container{
+    width: 900px;
+}
+
+#user-table {
+    width: 70%;
+}
+
+#user-bloglist{
+    width: 70%;
+}
+
+.blog-input {
+    margin: 10px;
+}
+
+.login-input {
+    width: 40%;
+    margin: 10px;
 }

@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { hideNotify, showNotify } from '../reducers/notificationReducer'
 import {createBlog} from '../reducers/blogReducer'
 import { useDispatch } from 'react-redux'
+import { Form, FormGroup, Label, Input, Button } from 'reactstrap'
 
 export default function BlogForm({ user }) {
   const [title, setTitle] = useState('')
@@ -27,52 +28,71 @@ export default function BlogForm({ user }) {
 
   const addBlog = (event) => {
     event.preventDefault()
-    dispatch(createBlog({
-      name: user.name,
-      title: title,
-      author: author,
-      url: url,
-    }))
+    dispatch(
+      createBlog({
+        name: user.name,
+        title: title,
+        author: author,
+        url: url,
+      }),
+    )
 
-    dispatch(showNotify(`A new blog ${title} added!`, 'green'))
+    dispatch(showNotify(`A new blog ${title} added!`, 'success'))
     setTimeout(() => {
       dispatch(hideNotify())
-    }, 5000);
+    }, 5000)
     setTitle('')
     setAuthor('')
     setUrl('')
   }
 
-  
   return (
     <div>
       <h2>Create a New Blog</h2>
-      <form id="blogForm" onSubmit={addBlog}>
-        title:
-        <input
-          id="titleInput"
-          value={title}
-          name="Title"
-          onChange={handleTitleChange}
-        />
-        author:
-        <input
-          id="authorInput"
-          value={author}
-          name="Author"
-          onChange={handleAuthorChange}
-        />
-        url:
-        <input
-          id="urlInput"
-          value={url}
-          name="Url"
-          onChange={handleUrlChange}
-        />
-        <button type="submit" onClick={addBlog}>
+      <Form inline id="blogForm" onSubmit={addBlog}>
+        <FormGroup>
+          <Label for="titleInput" hidden>
+            Title
+          </Label>
+          <Input
+            className="blog-input"
+            id="titleInput"
+            value={title}
+            name="Title"
+            onChange={handleTitleChange}
+            placeholder="Title"
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="authorInput" hidden>
+            Author
+          </Label>
+          <Input
+            className="blog-input"
+            id="authorInput"
+            value={author}
+            name="Author"
+            onChange={handleAuthorChange}
+            placeholder="Author"
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="urlInput" hidden>
+            Url
+          </Label>
+          <Input
+            className="blog-input"
+            id="urlInput"
+            value={url}
+            name="Url"
+            onChange={handleUrlChange}
+            placeholder="Url"
+          />
+        </FormGroup>
+        <Button type="submit" onClick={addBlog}>
           Add Blog
-        </button>
-      </form>
+        </Button>
+      </Form>
     </div>
   )
 }

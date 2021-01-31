@@ -3,6 +3,7 @@ import Header from './Header'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUsers } from '../reducers/usersReducer'
 import {  Link } from 'react-router-dom'
+import {  Table } from 'reactstrap'
 
 export default function UserPage() {
   const dispatch = useDispatch()
@@ -13,18 +14,26 @@ export default function UserPage() {
   }, [dispatch])
 
   const List = () => (
-    <div>
-      <ul>
-        {users.map((user) => {
-          return (
-            <li key={user.id}>
-              name: <Link to={`/users/${user.id}`}>{user.name}</Link> blogs:
-              {user.blogs.length}
-            </li>
-          )
-        })}
-      </ul>
-    </div>
+    <Table striped bordered id="user-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Blogs</th>
+        </tr>
+      </thead>
+      <tbody>
+          {users.map((user) => {
+            return (
+              <tr key={user.id}>
+                <td>
+                  <Link to={`/users/${user.id}`}>{user.name}</Link>
+                </td>
+                <td>{user.blogs.length}</td>
+              </tr>
+            )
+          })}
+      </tbody>
+    </Table>
   )
 
   return (

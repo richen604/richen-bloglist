@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import { ListGroup, ListGroupItem } from 'reactstrap'
 import Header from './Header'
 
 export default function SingleUserPage() {
@@ -24,13 +25,13 @@ export default function SingleUserPage() {
       <h2>{user.name}</h2>
       <h4>Added Blogs</h4>
 
-      <ul>
+      <ListGroup id="user-bloglist">
       {user.blogs.map(blog => (
-        <li key={blog.id}>
+        <ListGroupItem key={blog.id}>
           {blog.title}
-        </li>
+        </ListGroupItem>
         ))}
-      </ul>
+      </ListGroup>
       
      
     </div>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logoutUser, setUser } from '../reducers/userReducer'
 import blogService from '../services/blogs'
+import { Alert, Navbar, Nav } from 'reactstrap'
 
 // eslint-disable-next-line react/prop-types
 const Notification = ({ message, color }) => {
@@ -11,13 +12,13 @@ const Notification = ({ message, color }) => {
   }
 
   return (
-    <div className="error" style={{ color: color }}>
+    <Alert id="notification" color={color} >
       {message}
-    </div>
+    </Alert>
   )
 }
 
-const Nav = ({ user }) => {
+const NavComponent = ({ user }) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -38,7 +39,8 @@ const Nav = ({ user }) => {
 
   if (user)
     return (
-      <div className="header-nav" style={{ display: 'flex' }}>
+      <Navbar color="light" light expand="md" className="header-nav" style={{ display: 'flex' }}>
+        <Nav>
         <Link style={{ padding: '20px' }} to="/">
           Home
         </Link>
@@ -61,18 +63,22 @@ const Nav = ({ user }) => {
           >
             logout
           </button>
-        </div>
-      </div>
+          </div>
+
+        </Nav>
+      </Navbar>
     )
   return (
-    <div className="header-nav" style={{ display: 'flex' }}>
+    <Navbar color="light" light expand="md" className="header-nav" style={{ display: 'flex' }}>
+      <Nav>
       <Link style={{ padding: '20px' }} to="/">
         Home
       </Link>
       <Link style={{ padding: '20px' }} to="/users">
         Users
       </Link>
-    </div>
+      </Nav>
+    </Navbar>
   )
 }
 
@@ -82,7 +88,7 @@ export default function Header() {
   return (
     <div>
       <h1>Blog List Application</h1>
-      <Nav {...{ user }} />
+      <NavComponent {...{ user }} />
       <Notification message={notify.msg} color={notify.color} />
     </div>
   )

@@ -11,6 +11,7 @@ import { setUser } from './reducers/userReducer'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Header from './components/Header'
+import { ListGroup } from 'reactstrap'
 
 const App = () => {
   const [username, setUsername] = useState('')
@@ -49,7 +50,7 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      dispatch(showNotify('Wrong Username or Password', 'red'))
+      dispatch(showNotify('Wrong Username or Password', 'danger'))
       setTimeout(() => dispatch(hideNotify()), 5000)
     }
     if (loginUser) dispatch(setUser(loginUser))
@@ -84,11 +85,11 @@ const App = () => {
           <h2>Blogs</h2>
           {blogForm()}
           <div>
-            <ul id="blogList">
+            <ListGroup id="bloglist-container">
               {blogs.map((blog, i) => (
                 <Blog key={i} {...{ blog, user }} />
               ))}
-            </ul>
+            </ListGroup>
           </div>
         </div>
       )}

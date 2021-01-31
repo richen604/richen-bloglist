@@ -8,6 +8,7 @@ import App from './App'
 import UserPage from './components/UserPage'
 import SingleUserPage from './components/SingleUserPage'
 import SingleBlogPage from './components/SingleBlogPage'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const store = configureStore()
 

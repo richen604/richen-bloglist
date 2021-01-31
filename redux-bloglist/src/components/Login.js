@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Button, Form, FormGroup, Input, Label } from 'reactstrap'
 
 const LoginForm = ({
   handleSubmit,
@@ -13,26 +14,34 @@ const LoginForm = ({
     <div>
       <h2>Login</h2>
 
-      <form id="loginForm" onSubmit={handleSubmit}>
-        <div>
-          username
-          <input
+      <Form inline id="loginForm" onSubmit={handleSubmit}>
+        <FormGroup>
+          <Label for="usernameInput" hidden>
+            Username
+          </Label>
+          <Input
+            className="login-input"
             id="usernameInput"
             value={username}
             onChange={handleUsernameChange}
+            placeholder="Username"
           />
-        </div>
-        <div>
-          password
-          <input
+        </FormGroup>
+        <FormGroup>
+          <Label for="passwordInput" hidden>
+            Password
+          </Label>
+          <Input
+            className="login-input"
             id="passwordInput"
             type="password"
             value={password}
             onChange={handlePasswordChange}
+            placeholder="Password"
           />
-        </div>
-        <button type="submit">login</button>
-      </form>
+        </FormGroup>
+        <Button type="submit">Login</Button>
+      </Form>
     </div>
   )
 }
