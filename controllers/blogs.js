@@ -12,6 +12,10 @@ const getTokenFrom = (request) => {
   return null
 }
 
+blogsRouter.get('/health', (request, response) => {
+  response.send('ok')
+})
+
 blogsRouter.get('/', async (request, response) => {
   const blogs = await Blog.find({}).populate('user', {
     username: 1,

@@ -1,7 +1,7 @@
 {
-  "name": "blog-list",
+  "name": "richen-bloglist",
   "version": "1.0.0",
-  "description": "blog list for part4 of FullStack Open 2020 MOOC",
+  "description": "an application to list all of your favourite blogs",
   "main": "server.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production node server.js",
@@ -16,6 +16,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint . --fix",
     "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
     "start:test": "cross-env NODE_ENV=test node server.js"
   },
   "author": "",
