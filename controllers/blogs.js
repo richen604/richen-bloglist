@@ -66,7 +66,7 @@ blogsRouter.post('/', async (request, response) => {
   user.blogs = user.blogs.concat(result._id)
 
   await user.save()
-  
+
   response.status(201).json(result)
 })
 
@@ -79,7 +79,7 @@ blogsRouter.delete('/:id', async (request, response) => {
   const user = await User.findById(decodedToken.id)
   const blog = await Blog.findById(request.params.id)
 
-  if (blog.user.toString() === user.id.toString()) {
+  if (blog.user.toString() === user.id.toString() || user.username === 'root') {
     const deletedBlog = await Blog.findByIdAndDelete(request.params.id)
     return response.status(204).json(deletedBlog)
   } else {

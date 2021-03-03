@@ -26,4 +26,4 @@ Make a new branch for your changes and add it to the forked repository you creat
 
 ## Motivation
 
-Originally making this for the fso2020 course, I've decided to maintain it and showcase it. It shows knowledge of user authentication, routing, end to end testing
+Originally making this for the fso2020 course, I've decided to maintain it and showcase it. It shows knowledge of user authentication, routing, unit testing, end to end testing, state management and production pipelines

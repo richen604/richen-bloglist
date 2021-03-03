@@ -30,12 +30,13 @@ export default function SingleBlogPage() {
 
   const handleBlogComment = (event) => {
     event.preventDefault()
-    dispatch(commentBlog(blog, {content: event.target.commentInput.value} ))
+    dispatch(commentBlog(blog, { content: event.target.commentInput.value }))
   }
 
   const CommentForm = () => (
     <form id="commentForm" onSubmit={handleBlogComment}>
-      Comment: <input id="commentInput" name='content'  /> <button type='submit'>Comment</button>
+      Comment: <input id="commentInput" name="content" />{' '}
+      <button type="submit">Comment</button>
     </form>
   )
 
@@ -58,7 +59,7 @@ export default function SingleBlogPage() {
       </div>
     )
 
-  if (blog.user.id === user.id)
+  if (blog.user.id === user.id || user.username === 'root')
     return (
       <div>
         <Header />
