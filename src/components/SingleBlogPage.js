@@ -11,7 +11,6 @@ export default function SingleBlogPage() {
   const user = useSelector((state) => state.user)
 
   const id = useParams().id
-  console.log(id)
 
   const blog = blogs.find((blog) => blog.id === id)
 
@@ -52,7 +51,7 @@ export default function SingleBlogPage() {
     </>
   )
 
-  if (!blog && id === 'null')
+  if (!blog && !id)
     return (
       <div>
         <Header />
