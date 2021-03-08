@@ -17,7 +17,7 @@
     "lint": "eslint . --fix",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "start:test": "cross-env NODE_ENV=test node server.js"
+    "start:test": "NODE_ENV=test node server.js"
   },
   "author": "",
   "license": "ISC",
