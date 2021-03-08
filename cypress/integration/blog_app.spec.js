@@ -114,14 +114,14 @@ describe('Blog app', function () {
 
       it('user can like a blog', function () {
         cy.visit('http://localhost:3001')
-        cy.get('.blog-link').click()
+        cy.get('.blog-link').first().click()
         cy.contains('Like').click()
         cy.contains('1')
       })
 
       it('user can delete a blog they created', function () {
         cy.visit('http://localhost:3001')
-        cy.get('.blog-link').click()
+        cy.get('.blog-link').first().click()
         cy.contains('Delete Blog').click()
         cy.get('html').should('not.contain', 'This is the Blog Title')
       })
