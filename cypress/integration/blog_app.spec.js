@@ -87,7 +87,7 @@ describe('Blog app', function () {
   })
 
   describe('when logged in', function () {
-    beforeEach(function () {
+    before(function () {
       cy.request('POST', 'http://localhost:3001/api/testing/reset')
       cy.request('POST', 'http://localhost:3001/api/users', user)
       cy.login({ username: 'mluukkai', password: 'salainen' })
@@ -105,6 +105,10 @@ describe('Blog app', function () {
 
     describe('Blog Details', function () {
       beforeEach(function () {
+        cy.request('POST', 'http://localhost:3001/api/testing/reset')
+        cy.request('POST', 'http://localhost:3001/api/users', user)
+        cy.login({ username: 'mluukkai', password: 'salainen' })
+        cy.visit('http://localhost:3001')
         cy.contains('New Blog').click()
         cy.get('#titleInput').type('This is the Blog Title')
         cy.get('#authorInput').type('This is the Blog Author')
@@ -112,13 +116,12 @@ describe('Blog app', function () {
         cy.get('#blogForm').submit()
       })
 
-      /*it('user can like a blog', function () {
+      it('user can like a blog', function () {
         cy.visit('http://localhost:3001')
         cy.get('.blog-link').first().click()
         cy.contains('Like').click()
         cy.contains('1')
       })
-      */
 
       it('user can delete a blog they created', function () {
         cy.visit('http://localhost:3001')
