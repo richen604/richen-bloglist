@@ -1,7 +1,12 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/api/blogs'
+
 //local development 'http://localhost:3000/api/blogs'
 //prod '/api/blogs'
+let baseUrl
+if (process.env.NODE_ENV === 'test') {
+  baseUrl = 'http://localhost:3001/api/blogs'
+}
+baseUrl = '/api/blogs'
 
 let token = null
 

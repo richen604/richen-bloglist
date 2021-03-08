@@ -53,23 +53,22 @@ const newUser = {
 }
 
 describe('Blog app', function () {
-  beforeEach(function () {
-    cy.request('POST', 'http://localhost:3001/api/testing/reset')
-    cy.request('POST', 'http://localhost:3001/api/users', user)
-    cy.visit('http://localhost:3001')
-  })
-  it('Login form is shown', function () {
-    cy.contains('Blog List Application')
-    cy.contains('login').click()
-    cy.contains('username')
-    cy.contains('password')
-  })
-
-  it('login form can be opened', function () {
-    cy.contains('login').click()
-  })
-
   describe('Login', function () {
+    beforeEach(function () {
+      cy.request('POST', 'http://localhost:3001/api/testing/reset')
+      cy.request('POST', 'http://localhost:3001/api/users', user)
+      cy.visit('http://localhost:3001')
+    })
+    it('Login form is shown', function () {
+      cy.contains('Blog List Application')
+      cy.contains('login').click()
+      cy.contains('Username')
+      cy.contains('Password')
+    })
+
+    it('login form can be opened', function () {
+      cy.contains('login').click()
+    })
     it('user can login with correct credentials', function () {
       cy.contains('login').click()
       cy.get('#usernameInput').type('mluukkai')
@@ -102,7 +101,6 @@ describe('Blog app', function () {
       cy.get('#urlInput').type('This is the Blog Url')
       cy.get('#blogForm').submit()
       cy.contains('This is the Blog Title')
-      cy.contains('This is the Blog Author')
     })
 
     describe('Blog Details', function () {
@@ -115,16 +113,15 @@ describe('Blog app', function () {
       })
 
       it('user can like a blog', function () {
-        cy.contains('View Details').click()
-        cy.contains('like').click()
-        cy.contains('View Details').click()
+        cy.get('.blog-link').click()
+        cy.contains('Like').click()
         cy.contains('1')
       })
 
       it('user can delete a blog they created', function () {
         cy.visit('http://localhost:3001')
-        cy.contains('View Details').click()
-        cy.contains('Delete').click()
+        cy.get('.blog-link').click()
+        cy.contains('Delete Blog').click()
         cy.get('html').should('not.contain', 'This is the Blog Title')
       })
 
@@ -132,38 +129,8 @@ describe('Blog app', function () {
         cy.request('POST', 'http://localhost:3001/api/users', newUser)
         cy.login(newUser)
         cy.visit('http://localhost:3001')
-        cy.contains('This is the Blog Title')
-        cy.contains('View Details').click()
+        cy.contains('This is the Blog Title').click()
         cy.get('html').should('not.contain', 'Delete')
-      })
-    })
-  })
-  describe('when adding blogs', function () {
-    beforeEach(function () {
-      cy.request('POST', 'http://localhost:3001/api/testing/reset')
-      cy.request('POST', 'http://localhost:3001/api/users', user)
-      cy.login({ username: 'mluukkai', password: 'salainen' })
-      initialBlogs.forEach((blog) => {
-        cy.createBlog(blog)
-      })
-      cy.visit('http://localhost:3001')
-    })
-    it('blogs are listed in order of likes', function () {
-      cy.visit('http://localhost:3001')
-      const likesArr = initialBlogs
-        .map((blog) => blog.likes)
-        .sort((a, b) => a < b)
-      cy.get('li').then((blogs) => {
-        //create an iterable array of li elements that contain blog information
-        const blogsArr = Object.keys(blogs)
-          .map((key) => blogs[key])
-          .slice(0, 6)
-
-        blogsArr.forEach((blog, i) => {
-          cy.get('#viewDetailsButton').click()
-          cy.contains('Likes')
-          cy.contains(`${likesArr[i]}`)
-        })
       })
     })
   })
