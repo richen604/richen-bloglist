@@ -113,6 +113,7 @@ describe('Blog app', function () {
       })
 
       it('user can like a blog', function () {
+        cy.visit('http://localhost:3001')
         cy.get('.blog-link').click()
         cy.contains('Like').click()
         cy.contains('1')
