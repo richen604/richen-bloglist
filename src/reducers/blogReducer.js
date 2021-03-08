@@ -11,7 +11,7 @@ export const createBlog = (blogObj) => {
   return async (dispatch) => {
     const newBlog = await blogService.create(blogObj)
     const blogs = await blogService.getAll()
-    const thisBlog = blogs.find(blog => blog.id === newBlog.id)
+    const thisBlog = blogs.find((blog) => blog.id === newBlog.id)
     dispatch({
       type: 'NEW_BLOG',
       data: {
@@ -52,7 +52,7 @@ export const commentBlog = (blogObj, comment) => {
       type: 'UPDATE_BLOG',
       data: {
         blog: newBlog,
-      }
+      },
     })
   }
 }
@@ -63,12 +63,12 @@ const blogReducer = (state = [], action) => {
       return action.data.blogs
     case 'NEW_BLOG':
       return state.concat(action.data.blog)
-    case 'UPDATE_BLOG':{
-      const newState = state.filter(blog => blog.id !== action.data.blog.id)
+    case 'UPDATE_BLOG': {
+      const newState = state.filter((blog) => blog.id !== action.data.blog.id)
       return newState.concat(action.data.blog)
     }
     case 'REMOVE_BLOG': {
-      return state.filter(blog => blog.id !== action.data.blog.id)
+      return state.filter((blog) => blog.id !== action.data.blog.id)
     }
     default:
       return state

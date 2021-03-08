@@ -1,14 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import configureStore, {history} from './store'
-import { Route, Switch} from 'react-router'
+import configureStore, { history } from './store'
+import { Route, Switch } from 'react-router'
 import { ConnectedRouter } from 'connected-react-router'
 import App from './App'
 import UserPage from './components/UserPage'
 import SingleUserPage from './components/SingleUserPage'
 import SingleBlogPage from './components/SingleBlogPage'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const store = configureStore()
 
@@ -20,9 +20,9 @@ ReactDOM.render(
           <Route exact path="/">
             <App />
           </Route>
-          <Route path="/blog/:id" >
+          <Route path="/blog/:id">
             <SingleBlogPage />
-            </Route>
+          </Route>
           <Route exact path="/users">
             <UserPage />
           </Route>

@@ -1,10 +1,9 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { ListGroupItem } from 'reactstrap'
 
 const Blog = ({ blog }) => {
-
   return (
     <ListGroupItem
       className="blog"
@@ -14,7 +13,10 @@ const Blog = ({ blog }) => {
       }}
     >
       <div style={{ padding: '10px 10px 10px 0px' }}>
-          Title: <Link to={`/blog/${blog.id}`}>{blog.title}</Link>
+        Title:{' '}
+        <Link className="blog-link" to={`/blog/${blog.id}`}>
+          {blog.title}
+        </Link>
       </div>
     </ListGroupItem>
   )

@@ -11,6 +11,7 @@ export default function SingleBlogPage() {
   const user = useSelector((state) => state.user)
 
   const id = useParams().id
+  console.log(id)
 
   const blog = blogs.find((blog) => blog.id === id)
 
@@ -51,7 +52,7 @@ export default function SingleBlogPage() {
     </>
   )
 
-  if (!blog)
+  if (!blog && id === 'null')
     return (
       <div>
         <Header />
@@ -66,8 +67,8 @@ export default function SingleBlogPage() {
         <h3>{blog.title}</h3>
         <div>
           <a href={blog.url}>{blog.url}</a> <br />
-          Likes: {blog.likes}{' '}
-          <button onClick={() => handleBlogLike()}>Like</button> <br />
+          Likes: {blog.likes} <button onClick={handleBlogLike}>Like</button>{' '}
+          <br />
           {blog.user.name} <br />
           <button onClick={handleBlogDelete}>Delete Blog</button>
         </div>

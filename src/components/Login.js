@@ -16,28 +16,24 @@ const LoginForm = ({
 
       <Form inline id="loginForm" onSubmit={handleSubmit}>
         <FormGroup>
-          <Label for="usernameInput" hidden>
-            Username
-          </Label>
+          <Label for="usernameInput">Username</Label>
           <Input
             className="login-input"
             id="usernameInput"
             value={username}
             onChange={handleUsernameChange}
-            placeholder="Username"
+            placeholder="Please type your username..."
           />
         </FormGroup>
         <FormGroup>
-          <Label for="passwordInput" hidden>
-            Password
-          </Label>
+          <Label for="passwordInput">Password</Label>
           <Input
             className="login-input"
             id="passwordInput"
             type="password"
             value={password}
             onChange={handlePasswordChange}
-            placeholder="Password"
+            placeholder="Please type your password..."
           />
         </FormGroup>
         <Button type="submit">Login</Button>
