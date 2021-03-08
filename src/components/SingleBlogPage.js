@@ -51,7 +51,7 @@ export default function SingleBlogPage() {
     </>
   )
 
-  if (!blog && !id)
+  if (!blog || !id)
     return (
       <div>
         <Header />
