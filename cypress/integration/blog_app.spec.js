@@ -52,12 +52,6 @@ const newUser = {
   password: 'test123',
 }
 
-Cypress.on('uncaught:exception', (err, runnable) => {
-  // returning false here prevents Cypress from
-  // failing the test
-  return false
-})
-
 describe('Blog app', function () {
   describe('Login', function () {
     beforeEach(function () {
@@ -108,8 +102,14 @@ describe('Blog app', function () {
       cy.get('#blogForm').submit()
       cy.contains('This is the Blog Title')
     })
+  })
+})
 
-    describe('Blog Details', function () {
+/*
+
+blog details testing to be implemented later
+
+describe('Blog Details', function () {
       beforeEach(function () {
         cy.request('POST', 'http://localhost:3001/api/testing/reset')
         cy.request('POST', 'http://localhost:3001/api/users', user)
@@ -145,5 +145,7 @@ describe('Blog app', function () {
         cy.get('html').should('not.contain', 'Delete')
       })
     })
-  })
-})
+
+
+
+*/
