@@ -3,10 +3,11 @@ import axios from 'axios'
 //local development 'http://localhost:3000/api/login'
 //prod '/api/login'
 let baseUrl
-if (process.env.NODE_ENV === 'test') {
+if (process.env.NODE_ENV !== 'production') {
   baseUrl = 'http://localhost:3001/api/login'
+} else {
+  baseUrl = '/api/login'
 }
-baseUrl = '/api/login'
 
 const login = async (credentials) => {
   const response = await axios.post(baseUrl, credentials)

@@ -9,7 +9,6 @@ export default function SingleBlogPage() {
   const history = useHistory()
   const blogs = useSelector((state) => state.blogs)
   const user = useSelector((state) => state.user)
-
   const id = useParams().id
 
   const blog = blogs.find((blog) => blog.id === id)
