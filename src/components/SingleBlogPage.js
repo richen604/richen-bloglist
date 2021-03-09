@@ -7,8 +7,7 @@ import Header from './Header'
 export default function SingleBlogPage() {
   const dispatch = useDispatch()
   const history = useHistory()
-  const blogs = useSelector((state) => state.blogs)
-  const user = useSelector((state) => state.user)
+  const { blogs, user } = useSelector((state) => state)
   const id = useParams().id
 
   const blog = blogs.find((blog) => blog.id === id)
@@ -58,7 +57,8 @@ export default function SingleBlogPage() {
       </div>
     )
 
-  if (blog.user.id === user.id || user.username === 'root')
+  // !blog.user is temporary being handled for existing production data
+  if (!blog.user || blog.user.id !== user.id || user.username !== 'root') {
     return (
       <div>
         <Header />
@@ -70,13 +70,14 @@ export default function SingleBlogPage() {
             Like
           </button>{' '}
           <br />
-          {blog.user.name} <br />
-          <button onClick={handleBlogDelete}>Delete Blog</button>
+          {blog.user && blog.user.name}
+          {!blog.user && 'Root User'}
         </div>
         <CommentForm />
         <CommentDisplay />
       </div>
     )
+  }
 
   return (
     <div>
@@ -90,6 +91,7 @@ export default function SingleBlogPage() {
         </button>{' '}
         <br />
         {blog.user.name} <br />
+        <button onClick={handleBlogDelete}>Delete Blog</button>
       </div>
       <CommentForm />
       <CommentDisplay />
