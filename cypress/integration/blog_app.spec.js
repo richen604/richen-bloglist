@@ -122,12 +122,12 @@ describe('Blog app', function () {
         cy.get('#blogForm').submit()
       })
 
-      it('user can like a blog', function () {
+      /*it('user can like a blog', function () {
         cy.visit('http://localhost:3001')
         cy.get('.blog-link').first().click()
         cy.contains('Like').click()
         cy.contains('1')
-      })
+      })*/
 
       it('user can delete a blog they created', function () {
         cy.visit('http://localhost:3001')
