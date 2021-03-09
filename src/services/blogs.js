@@ -3,10 +3,11 @@ import axios from 'axios'
 //local development 'http://localhost:3000/api/blogs'
 //prod '/api/blogs'
 let baseUrl
-if (process.env.NODE_ENV === 'test') {
+if (process.env.NODE_ENV !== 'production') {
   baseUrl = 'http://localhost:3001/api/blogs'
+} else {
+  baseUrl = '/api/blogs'
 }
-baseUrl = '/api/blogs'
 
 let token = null
 
