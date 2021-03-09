@@ -51,7 +51,7 @@ export default function SingleBlogPage() {
     </>
   )
 
-  if (!blog && !id)
+  if (!blog || !id)
     return (
       <div>
         <Header />
@@ -66,7 +66,10 @@ export default function SingleBlogPage() {
         <h3>{blog.title}</h3>
         <div>
           <a href={blog.url}>{blog.url}</a> <br />
-          Likes: {blog.likes} <button onClick={handleBlogLike}>Like</button>{' '}
+          Likes: {blog.likes}{' '}
+          <button id="like-button" onClick={handleBlogLike}>
+            Like
+          </button>{' '}
           <br />
           {blog.user.name} <br />
           <button onClick={handleBlogDelete}>Delete Blog</button>
@@ -82,7 +85,10 @@ export default function SingleBlogPage() {
       <h3>{blog.title}</h3>
       <div>
         <a href={blog.url}>{blog.url}</a> <br />
-        Likes: {blog.likes} <button onClick={handleBlogLike}>Like</button>{' '}
+        Likes: {blog.likes}{' '}
+        <button id="like-button" onClick={handleBlogLike}>
+          Like
+        </button>{' '}
         <br />
         {blog.user.name} <br />
       </div>
