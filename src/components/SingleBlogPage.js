@@ -57,8 +57,7 @@ export default function SingleBlogPage() {
       </div>
     )
 
-  // !blog.user is temporary being handled for existing production data
-  if (!blog.user || blog.user.id !== user.id || user.username !== 'root') {
+  if (blog.user.id === user.id || user.username === 'root') {
     return (
       <div>
         <Header />
@@ -70,15 +69,14 @@ export default function SingleBlogPage() {
             Like
           </button>{' '}
           <br />
-          {blog.user && blog.user.name}
-          {!blog.user && 'Root User'}
+          {blog.user.name} <br />
+          <button onClick={handleBlogDelete}>Delete Blog</button>
         </div>
         <CommentForm />
         <CommentDisplay />
       </div>
     )
   }
-
   return (
     <div>
       <Header />
@@ -90,8 +88,8 @@ export default function SingleBlogPage() {
           Like
         </button>{' '}
         <br />
-        {blog.user.name} <br />
-        <button onClick={handleBlogDelete}>Delete Blog</button>
+        {blog.user && blog.user.name}
+        {!blog.user && 'Root User'}
       </div>
       <CommentForm />
       <CommentDisplay />

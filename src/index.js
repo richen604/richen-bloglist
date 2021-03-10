@@ -21,11 +21,11 @@ ReactDOM.render(
             <Route exact path="/">
               <App />
             </Route>
-            <Route path="/blog/:id" component={SingleBlogPage} />
-            <Route path="/users">
+            <Route exact path="/blog/:id" component={SingleBlogPage} />
+            <Route exact path="/users">
               <UserPage />
             </Route>
-            <Route path="/users/:id" component={SingleUserPage} />
+            <Route exact path="/users/:id" component={SingleUserPage} />
           </Switch>
         </div>
       </ConnectedRouter>
