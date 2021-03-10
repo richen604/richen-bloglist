@@ -6,7 +6,6 @@ import Header from './Header'
 
 export default function SingleUserPage() {
   const users = useSelector((state) => state.users)
-
   const id = useParams().id
 
   const user = users.find((user) => user.id === id)
@@ -25,16 +24,15 @@ export default function SingleUserPage() {
       <h2>{user.name}</h2>
       <h4>Added Blogs</h4>
 
-      <ListGroup id="user-bloglist">
-      {user.blogs.map(blog => (
-        <ListGroupItem key={blog.id}>
-          {blog.title}
-        </ListGroupItem>
-        ))}
-      </ListGroup>
-      
-     
+      {user.blogs.length > 0 ? (
+        <ListGroup id="user-bloglist">
+          {user.blogs.map((blog) => (
+            <ListGroupItem key={blog.id}>{blog.title}</ListGroupItem>
+          ))}
+        </ListGroup>
+      ) : (
+        <p>User has no blogs!</p>
+      )}
     </div>
   )
 }
-
