@@ -69,7 +69,7 @@ describe('Blog app', function () {
   describe('Login', function () {
     beforeEach(function () {
       cy.request('POST', 'http://localhost:3001/api/testing/reset')
-      cy.request('POST', 'http://localhost:3001/api/users', newUSer)
+      cy.request('POST', 'http://localhost:3001/api/users', newUser)
       cy.visit('http://localhost:3001')
     })
     it('Login form is shown', function () {
@@ -123,11 +123,12 @@ describe('Blog app', function () {
       users.forEach((thisUser) => {
         cy.request('POST', 'http://localhost:3001/api/users', thisUser)
       })
+      cy.login({ username: users[0].username, password: users[0].password })
+      cy.visit('http://localhost:3001')
     })
 
     it('adding default blogs', function () {
       initialBlogs.forEach((blog) => {
-        cy.visit('http://localhost:3001')
         cy.contains('New Blog').click()
         cy.get('#titleInput').type(blog.title)
         cy.get('#authorInput').type(blog.author)
