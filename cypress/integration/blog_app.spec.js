@@ -4,6 +4,7 @@ const initialBlogs = [
     author: 'Michael Chan',
     url: 'https://reactpatterns.com/',
     likes: 7,
+    comments: [],
   },
   {
     title: 'Go To Statement Considered Harmful',
@@ -11,12 +12,14 @@ const initialBlogs = [
     url:
       'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
     likes: 5,
+    comments: [],
   },
   {
     title: 'Canonical string reduction',
     author: 'Edsger W. Dijkstra',
     url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
     likes: 12,
+    comments: [],
   },
   {
     title: 'First class tests',
@@ -24,6 +27,7 @@ const initialBlogs = [
     url:
       'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
     likes: 10,
+    comments: [],
   },
   {
     title: 'TDD harms architecture',
@@ -31,20 +35,16 @@ const initialBlogs = [
     url:
       'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
     likes: 0,
+    comments: [],
   },
   {
     title: 'Type wars',
     author: 'Robert C. Martin',
     url: 'http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',
     likes: 2,
+    comments: [],
   },
 ]
-
-const user = {
-  name: 'Matti Luukkainen',
-  username: 'mluukkai',
-  password: 'salainen',
-}
 
 const newUser = {
   name: 'test',
@@ -52,11 +52,24 @@ const newUser = {
   password: 'test123',
 }
 
+const users = [
+  {
+    name: 'richen',
+    username: 'richen',
+    password: 'testpassword',
+  },
+  {
+    name: 'Kyle',
+    username: 'kyle',
+    password: 'testpassword',
+  },
+]
+
 describe('Blog app', function () {
   describe('Login', function () {
     beforeEach(function () {
       cy.request('POST', 'http://localhost:3001/api/testing/reset')
-      cy.request('POST', 'http://localhost:3001/api/users', user)
+      cy.request('POST', 'http://localhost:3001/api/users', newUser)
       cy.visit('http://localhost:3001')
     })
     it('Login form is shown', function () {
@@ -71,15 +84,15 @@ describe('Blog app', function () {
     })
     it('user can login with correct credentials', function () {
       cy.contains('login').click()
-      cy.get('#usernameInput').type('mluukkai')
-      cy.get('#passwordInput').type('salainen')
+      cy.get('#usernameInput').type('test')
+      cy.get('#passwordInput').type('test123')
       cy.get('#loginForm').submit()
       cy.contains('logged in')
     })
 
     it('user cannot login with incorrect credentials', function () {
       cy.contains('login').click()
-      cy.get('#usernameInput').type('mluukkai')
+      cy.get('#usernameInput').type('richen')
       cy.get('#passwordInput').type('carrot')
       cy.get('#loginForm').submit()
       cy.contains('Wrong Username or Password')
@@ -89,8 +102,8 @@ describe('Blog app', function () {
   describe('when logged in', function () {
     before(function () {
       cy.request('POST', 'http://localhost:3001/api/testing/reset')
-      cy.request('POST', 'http://localhost:3001/api/users', user)
-      cy.login({ username: 'mluukkai', password: 'salainen' })
+      cy.request('POST', 'http://localhost:3001/api/users', newUser)
+      cy.login({ username: newUser.username, password: newUser.password })
       cy.visit('http://localhost:3001')
     })
 
@@ -101,6 +114,28 @@ describe('Blog app', function () {
       cy.get('#urlInput').type('This is the Blog Url')
       cy.get('#blogForm').submit()
       cy.contains('This is the Blog Title')
+    })
+  })
+
+  describe('default content setup', function () {
+    before(function () {
+      cy.request('POST', 'http://localhost:3001/api/testing/reset')
+      users.forEach((thisUser) => {
+        cy.request('POST', 'http://localhost:3001/api/users', thisUser)
+      })
+      cy.login({ username: users[0].username, password: users[0].password })
+      cy.visit('http://localhost:3001')
+    })
+
+    it('adding default blogs', function () {
+      initialBlogs.forEach((blog) => {
+        cy.contains('New Blog').click()
+        cy.get('#titleInput').type(blog.title)
+        cy.get('#authorInput').type(blog.author)
+        cy.get('#urlInput').type(blog.url)
+        cy.get('#blogForm').submit()
+        cy.visit('http://localhost:3001')
+      })
     })
   })
 })
