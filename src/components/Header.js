@@ -4,6 +4,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { logoutUser, setUser } from '../reducers/userReducer'
 import blogService from '../services/blogs'
 import { Alert, Navbar, Nav } from 'reactstrap'
+import './Header.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBook } from '@fortawesome/free-solid-svg-icons'
 
 // eslint-disable-next-line react/prop-types
 const Notification = ({ message, color }) => {
@@ -12,7 +15,7 @@ const Notification = ({ message, color }) => {
   }
 
   return (
-    <Alert id="notification" color={color} >
+    <Alert id="notification" color={color}>
       {message}
     </Alert>
   )
@@ -39,46 +42,43 @@ const NavComponent = ({ user }) => {
 
   if (user)
     return (
-      <Navbar color="light" light expand="md" className="header-nav" style={{ display: 'flex' }}>
-        <Nav>
-        <Link style={{ padding: '20px' }} to="/">
-          Home
-        </Link>
-        <Link style={{ padding: '20px' }} to="/users">
-          Users
-        </Link>
-        <div
-          className="header-nav-user-info"
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <div style={{ padding: '5px' }}>{user.name} has logged in</div>
-          <button
-            style={{ margin: '5px' }}
-            type="submit"
-            onClick={handleLogout}
-          >
+      <div id="nav-container">
+        <Navbar light expand="md" className="header-nav">
+          <FontAwesomeIcon id="nav-logo" icon={faBook} />
+          <div id="nav-title">BlogList</div>
+
+          <Nav id="nav-link-container">
+            <Link className="nav-links" to="/">
+              Home
+            </Link>
+            <Link className="nav-links" to="/users">
+              Users
+            </Link>
+          </Nav>
+          <div id="nav-spacer" />
+          <div id="nav-user-info">Hello {user.name}!</div>
+          <button id="nav-auth-button" type="submit" onClick={handleLogout}>
             logout
           </button>
-          </div>
-
-        </Nav>
-      </Navbar>
+        </Navbar>
+      </div>
     )
   return (
-    <Navbar color="light" light expand="md" className="header-nav" style={{ display: 'flex' }}>
-      <Nav>
-      <Link style={{ padding: '20px' }} to="/">
-        Home
-      </Link>
-      <Link style={{ padding: '20px' }} to="/users">
-        Users
-      </Link>
-      </Nav>
-    </Navbar>
+    <div id="nav-container">
+      <Navbar light expand="md" className="header-nav">
+        <FontAwesomeIcon id="nav-logo" icon={faBook} />
+        <div id="nav-title">BlogList</div>
+        <Nav id="nav-link-container">
+          <Link className="nav-links" to="/">
+            Home
+          </Link>
+          <Link className="nav-links" to="/users">
+            Users
+          </Link>
+        </Nav>
+      </Navbar>
+      <div id="nav-spacer" />
+    </div>
   )
 }
 
@@ -87,7 +87,6 @@ export default function Header() {
   const user = useSelector((state) => state.user)
   return (
     <div>
-      <h1>Blog List Application</h1>
       <NavComponent {...{ user }} />
       <Notification message={notify.msg} color={notify.color} />
     </div>
