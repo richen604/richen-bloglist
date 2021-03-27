@@ -22,11 +22,10 @@ import {
 import LoginDropdown from './LoginDropdown'
 
 // eslint-disable-next-line react/prop-types
-const Notification = ({ message, color }) => {
-  if (!message) {
+const Notification = ({ message, color, type }) => {
+  if (!message || type === 'auth') {
     return null
   }
-
   return (
     <Alert id="notification" color={color}>
       {message}
@@ -126,7 +125,11 @@ export default function Header() {
   return (
     <div>
       <NavComponent {...{ user }} />
-      <Notification message={notify.msg} color={notify.color} />
+      <Notification
+        message={notify.msg}
+        color={notify.color}
+        type={notify.type}
+      />
     </div>
   )
 }

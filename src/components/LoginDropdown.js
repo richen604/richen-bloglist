@@ -1,17 +1,61 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Button, Form, FormGroup, Input, Label } from 'reactstrap'
+import React, { useState } from 'react'
+import { Button, Form, FormGroup, Input, Label, Alert } from 'reactstrap'
+import loginService from '../services/login'
+import { hideNotify, showNotify } from '../reducers/notificationReducer'
+import { useDispatch, useSelector } from 'react-redux'
+import blogService from '../services/blogs'
+import { setUser } from '../reducers/userReducer'
 
-const LoginDropdown = ({
-  handleSubmit,
-  handleUsernameChange,
-  handlePasswordChange,
-  username,
-  password,
-}) => {
+const LoginDropdown = () => {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const notify = useSelector((state) => state.notify)
+  const dispatch = useDispatch()
+
+  const Notification = ({ message, color }) => {
+    if (!message) {
+      return null
+    }
+
+    return (
+      <Alert id="notification-dropdown" color={color}>
+        {message}
+      </Alert>
+    )
+  }
+
+  const handlePasswordChange = (event) => {
+    event.preventDefault()
+    setPassword(event.target.value)
+  }
+
+  const handleUsernameChange = (event) => {
+    event.preventDefault()
+    setUsername(event.target.value)
+  }
+
+  const handleLogin = async (event) => {
+    event.preventDefault()
+    let loginUser
+    try {
+      loginUser = await loginService.login({ username, password })
+      window.localStorage.setItem(
+        'loggedBlogAppUser',
+        JSON.stringify(loginUser),
+      )
+      blogService.setToken(loginUser.token)
+      setUsername('')
+      setPassword('')
+    } catch (exception) {
+      dispatch(showNotify('Wrong Username or Password', 'danger', 'auth'))
+      setTimeout(() => dispatch(hideNotify()), 5000)
+    }
+    if (loginUser) dispatch(setUser(loginUser))
+  }
   return (
     <div>
-      <Form inline id="login-dropdown-form" onSubmit={handleSubmit}>
+      <Notification message={notify.msg} color={notify.color} />
+      <Form inline id="login-dropdown-form" onSubmit={handleLogin}>
         <FormGroup>
           <Label for="username-dropdown-input">Username</Label>
           <Input
@@ -37,14 +81,6 @@ const LoginDropdown = ({
       </Form>
     </div>
   )
-}
-
-LoginDropdown.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  handleUsernameChange: PropTypes.func.isRequired,
-  handlePasswordChange: PropTypes.func.isRequired,
-  username: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
 }
 
 export default LoginDropdown
