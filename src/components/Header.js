@@ -11,11 +11,14 @@ import {
   UncontrolledButtonDropdown,
   DropdownMenu,
   DropdownToggle,
-  DropdownItem,
 } from 'reactstrap'
 import './Header.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBook } from '@fortawesome/free-solid-svg-icons'
+import {
+  faBook,
+  faSignOutAlt,
+  faSignInAlt,
+} from '@fortawesome/free-solid-svg-icons'
 import LoginDropdown from './LoginDropdown'
 
 // eslint-disable-next-line react/prop-types
@@ -72,6 +75,12 @@ const NavComponent = ({ user }) => {
             <Button id="nav-auth-button" type="submit" onClick={handleLogout}>
               Sign Out
             </Button>
+            <FontAwesomeIcon
+              id="nav-auth-icon-button"
+              icon={faSignOutAlt}
+              type="submit"
+              onClick={handleLogout}
+            />
           </div>
         </Navbar>
       </div>
@@ -92,18 +101,17 @@ const NavComponent = ({ user }) => {
           </Nav>
         </div>
         <div id="nav-right-container">
-          <div style={{ color: '#17a2b8' }} id="nav-user-info">
-            Hello Placeholder!
-          </div>
           <UncontrolledButtonDropdown
             id="nav-button-dropdown-container"
             nav
             inNavbar
           >
             <DropdownToggle id="nav-auth-button">Sign In</DropdownToggle>
-            <DropdownMenu right>
+            <DropdownToggle id="nav-auth-icon-dropdown">
+              <FontAwesomeIcon id="nav-auth-icon-button" icon={faSignInAlt} />
+            </DropdownToggle>
+            <DropdownMenu id="nav-dropdown-menu" right>
               <LoginDropdown />
-              <DropdownItem>Test</DropdownItem>
             </DropdownMenu>
           </UncontrolledButtonDropdown>
         </div>

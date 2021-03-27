@@ -1,12 +1,31 @@
 /* for tablet*/
+@media only screen and (max-width: 600px) {
+  #nav-user-info {
+    display: none;
+  }
+  #nav-auth-button {
+    display: none;
+  }
+}
+
 @media only screen and (min-width: 600px) {
+  #nav-auth-icon-button {
+    display: none;
+  }
+  #nav-auth-icon-dropdown {
+    display: none;
+  }
 }
 
 /* for desktop*/
-@media only screen and (min-width: 786px) {
+@media only screen and (max-width: 786px) {
+  #nav-title {
+    display: none;
+  }
 }
 
 #nav-container {
+  min-width: 360px;
   display: flex;
   background-color: #17a2b8;
   width: 100vw;
@@ -15,6 +34,7 @@
 }
 
 .header-nav {
+  min-width: 360px;
   display: block;
   width: 100vw;
   height: 70px;
@@ -37,8 +57,8 @@
 #nav-logo {
   padding: 0 12px 0 4px;
   color: #cbf3f0;
-  width: 60px;
-  height: 60px;
+  width: 55px;
+  height: 55px;
 }
 
 #nav-title {
@@ -81,6 +101,22 @@
   width: 115px;
   padding: 5px 10px 5px 10px;
   margin: 0;
+  border: none;
+  border-radius: 13px;
+}
+
+#nav-auth-icon-button {
+  color: #cbf3f0;
+  background-color: #17a2b8;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+}
+
+#nav-auth-icon-dropdown {
+  background-color: #17a2b8;
+  border: none;
 }
 
 #nav-auth-button:hover {
@@ -90,4 +126,8 @@
 #nav-button-dropdown-container {
   padding: 0;
   margin: 0;
+}
+
+#nav-dropdown-menu {
+  width: 342px;
 }
