@@ -3,10 +3,20 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logoutUser, setUser } from '../reducers/userReducer'
 import blogService from '../services/blogs'
-import { Alert, Navbar, Nav } from 'reactstrap'
+import {
+  Alert,
+  Navbar,
+  Nav,
+  Button,
+  UncontrolledButtonDropdown,
+  DropdownMenu,
+  DropdownToggle,
+  DropdownItem,
+} from 'reactstrap'
 import './Header.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBook } from '@fortawesome/free-solid-svg-icons'
+import LoginDropdown from './LoginDropdown'
 
 // eslint-disable-next-line react/prop-types
 const Notification = ({ message, color }) => {
@@ -43,10 +53,35 @@ const NavComponent = ({ user }) => {
   if (user)
     return (
       <div id="nav-container">
-        <Navbar light expand="md" className="header-nav">
+        <Navbar light className="header-nav">
+          <div id="nav-left-container">
+            <FontAwesomeIcon id="nav-logo" icon={faBook} />
+            <div id="nav-title">BlogList</div>
+
+            <Nav id="nav-link-container">
+              <Link className="nav-links" to="/">
+                Home
+              </Link>
+              <Link className="nav-links" to="/users">
+                Users
+              </Link>
+            </Nav>
+          </div>
+          <div id="nav-right-container">
+            <div id="nav-user-info">Hello {user.name}!</div>
+            <Button id="nav-auth-button" type="submit" onClick={handleLogout}>
+              Sign Out
+            </Button>
+          </div>
+        </Navbar>
+      </div>
+    )
+  return (
+    <div id="nav-container">
+      <Navbar light className="header-nav">
+        <div id="nav-left-container">
           <FontAwesomeIcon id="nav-logo" icon={faBook} />
           <div id="nav-title">BlogList</div>
-
           <Nav id="nav-link-container">
             <Link className="nav-links" to="/">
               Home
@@ -55,29 +90,24 @@ const NavComponent = ({ user }) => {
               Users
             </Link>
           </Nav>
-          <div id="nav-spacer" />
-          <div id="nav-user-info">Hello {user.name}!</div>
-          <button id="nav-auth-button" type="submit" onClick={handleLogout}>
-            logout
-          </button>
-        </Navbar>
-      </div>
-    )
-  return (
-    <div id="nav-container">
-      <Navbar light expand="md" className="header-nav">
-        <FontAwesomeIcon id="nav-logo" icon={faBook} />
-        <div id="nav-title">BlogList</div>
-        <Nav id="nav-link-container">
-          <Link className="nav-links" to="/">
-            Home
-          </Link>
-          <Link className="nav-links" to="/users">
-            Users
-          </Link>
-        </Nav>
+        </div>
+        <div id="nav-right-container">
+          <div style={{ color: '#17a2b8' }} id="nav-user-info">
+            Hello Placeholder!
+          </div>
+          <UncontrolledButtonDropdown
+            id="nav-button-dropdown-container"
+            nav
+            inNavbar
+          >
+            <DropdownToggle id="nav-auth-button">Sign In</DropdownToggle>
+            <DropdownMenu right>
+              <LoginDropdown />
+              <DropdownItem>Test</DropdownItem>
+            </DropdownMenu>
+          </UncontrolledButtonDropdown>
+        </div>
       </Navbar>
-      <div id="nav-spacer" />
     </div>
   )
 }

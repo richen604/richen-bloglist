@@ -1,12 +1,37 @@
+/* for tablet*/
+@media only screen and (min-width: 600px) {
+}
+
+/* for desktop*/
+@media only screen and (min-width: 786px) {
+}
+
 #nav-container {
   display: flex;
   background-color: #17a2b8;
   width: 100vw;
   height: 70px;
+  justify-content: space-between;
 }
 
 .header-nav {
+  display: block;
   width: 100vw;
+  height: 70px;
+}
+
+#nav-left-container {
+  display: flex;
+  justify-self: left;
+  justify-items: center;
+  align-items: center;
+}
+
+#nav-right-container {
+  display: flex;
+  justify-self: right;
+  justify-items: right;
+  align-items: center;
 }
 
 #nav-logo {
@@ -20,30 +45,49 @@
   color: #ffffff;
   padding: 0 24px 0 24px;
   font-size: x-large;
-  vertical-align: top;
   font-family: 'Open Sans', sans-serif;
 }
 
-#nav-link-container {
-  display: block;
-}
-
 .nav-links {
+  font-size: larger;
   color: #ffffff;
   padding: 0 8px 0 8px;
+}
+
+.nav-links:hover {
+  color: #ffc107;
+  text-decoration: none;
 }
 
 #nav-spacer {
-  width: 68vw;
+  display: none;
+  width: 40%;
+  height: 80px;
 }
 
 #nav-user-info {
+  font-size: larger;
   color: #ffffff;
   padding: 0 8px 0 8px;
-  width: 120px;
+  width: 150px;
+  margin: 0;
 }
 
 #nav-auth-button {
-  padding: 0 8px 0 8px;
-  margin: 0 8px 0 8px;
+  color: #17a2b8;
+  font-size: larger;
+  background-color: #cbf3f0;
+  height: 40px;
+  width: 115px;
+  padding: 5px 10px 5px 10px;
+  margin: 0;
+}
+
+#nav-auth-button:hover {
+  background-color: #ffffff;
+}
+
+#nav-button-dropdown-container {
+  padding: 0;
+  margin: 0;
 }
