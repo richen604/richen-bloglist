@@ -2,7 +2,6 @@ import React from 'react'
 import { Alert } from 'reactstrap'
 import { useSelector } from 'react-redux'
 import './HomePage.css'
-import Login from './Login'
 import { ReactComponent as SvgSocial } from '../images/undraw_social_share_algy.svg'
 
 const Notification = ({ notify }) => {
@@ -26,7 +25,6 @@ export default function HomePage() {
         <h5 id="homepage-text">
           A place to share and rate blogs and articles with your friends!
         </h5>
-        <Login id="auth-container" />
       </div>
     </div>
   )
