@@ -14,7 +14,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint . --fix",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run --browser chrome",
+    "cypress:run": "cypress run --headed",
     "start:test": "NODE_ENV=test node server.js"
   },
   "author": "",
