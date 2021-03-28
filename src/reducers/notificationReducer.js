@@ -1,6 +1,9 @@
 export const hideNotify = () => {
   return async (dispatch) => {
-    dispatch({ type: 'HIDE_NOTIFY', data: { msg: null, color: 'danger' } })
+    dispatch({
+      type: 'HIDE_NOTIFY',
+      data: { msg: null, color: 'danger', type: null },
+    })
   }
 }
 

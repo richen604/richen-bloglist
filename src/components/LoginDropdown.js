@@ -5,24 +5,19 @@ import { hideNotify, showNotify } from '../reducers/notificationReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import blogService from '../services/blogs'
 import { setUser } from '../reducers/userReducer'
+import './LoginDropdown.css'
+
+const Notification = ({ notify }) => {
+  if (!notify.msg || notify.type !== 'auth-dropdown') return null
+
+  return <Alert color={notify.color}>{notify.msg}</Alert>
+}
 
 const LoginDropdown = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const notify = useSelector((state) => state.notify)
   const dispatch = useDispatch()
-
-  const Notification = ({ message, color }) => {
-    if (!message) {
-      return null
-    }
-
-    return (
-      <Alert id="notification-dropdown" color={color}>
-        {message}
-      </Alert>
-    )
-  }
 
   const handlePasswordChange = (event) => {
     event.preventDefault()
@@ -47,17 +42,20 @@ const LoginDropdown = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      dispatch(showNotify('Wrong Username or Password', 'danger', 'auth'))
+      dispatch(
+        showNotify('Wrong Username or Password', 'danger', 'auth-dropdown'),
+      )
       setTimeout(() => dispatch(hideNotify()), 5000)
     }
     if (loginUser) dispatch(setUser(loginUser))
   }
   return (
     <div>
-      <Notification message={notify.msg} color={notify.color} />
-      <Form inline id="login-dropdown-form" onSubmit={handleLogin}>
-        <FormGroup>
+      <Notification {...{ notify }} />
+      <Form id="login-dropdown-form" onSubmit={handleLogin}>
+        <FormGroup className="login-dropdown-group">
           <Label for="username-dropdown-input">Username</Label>
+          <br />
           <Input
             className="login-dropdown-input"
             id="username-dropdown-input"
@@ -66,8 +64,9 @@ const LoginDropdown = () => {
             placeholder="Please type your username..."
           />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className="login-dropdown-group">
           <Label for="password-dropdown-input">Password</Label>
+          <br />
           <Input
             className="login-dropdown-input"
             id="password-dropdown-input"
@@ -79,6 +78,14 @@ const LoginDropdown = () => {
         </FormGroup>
         <Button type="submit">Login</Button>
       </Form>
+      <div id="login-dropdown-text">
+        <strong>Username:</strong> richen <br />
+        <strong>Password:</strong> testpassword
+        <br />
+        <br />
+        <strong>Username:</strong> kyle <br />
+        <strong>Password:</strong> testpassword
+      </div>
     </div>
   )
 }

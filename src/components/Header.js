@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { logoutUser, setUser } from '../reducers/userReducer'
 import blogService from '../services/blogs'
 import {
-  Alert,
   Navbar,
   Nav,
   Button,
@@ -20,18 +19,6 @@ import {
   faSignInAlt,
 } from '@fortawesome/free-solid-svg-icons'
 import LoginDropdown from './LoginDropdown'
-
-// eslint-disable-next-line react/prop-types
-const Notification = ({ message, color, type }) => {
-  if (!message || type === 'auth') {
-    return null
-  }
-  return (
-    <Alert id="notification" color={color}>
-      {message}
-    </Alert>
-  )
-}
 
 const NavComponent = ({ user }) => {
   const dispatch = useDispatch()
@@ -120,16 +107,10 @@ const NavComponent = ({ user }) => {
 }
 
 export default function Header() {
-  const notify = useSelector((state) => state.notify)
   const user = useSelector((state) => state.user)
   return (
     <div>
       <NavComponent {...{ user }} />
-      <Notification
-        message={notify.msg}
-        color={notify.color}
-        type={notify.type}
-      />
     </div>
   )
 }

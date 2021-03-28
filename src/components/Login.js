@@ -36,18 +36,22 @@ const LoginForm = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      dispatch(showNotify('Wrong Username or Password', 'danger'))
+      dispatch(
+        showNotify('Wrong Username or Password', 'danger', 'auth-homepage'),
+      )
       setTimeout(() => dispatch(hideNotify()), 5000)
     }
     if (loginUser) dispatch(setUser(loginUser))
   }
   return (
     <div id="login-container">
-      <h3>Sign In</h3>
+      <h3 id="login-title">Sign In</h3>
 
       <Form inline id="login-form" onSubmit={handleLogin}>
-        <FormGroup>
-          <Label for="username-input">Username</Label>
+        <FormGroup className="login-form-group">
+          <Label className="login-label" for="username-input">
+            Username
+          </Label>
           <br />
           <Input
             className="login-input"
@@ -57,8 +61,10 @@ const LoginForm = () => {
             placeholder="Please type your username..."
           />
         </FormGroup>
-        <FormGroup>
-          <Label for="password-input">Password</Label>
+        <FormGroup className="login-form-group">
+          <Label className="login-label" for="password-input">
+            Password
+          </Label>
           <br />
           <Input
             className="login-input"
@@ -73,6 +79,14 @@ const LoginForm = () => {
           Login
         </Button>
       </Form>
+      <div id="login-text">
+        <strong>Username:</strong> richen <br />
+        <strong>Password:</strong> testpassword
+        <br />
+        <br />
+        <strong>Username:</strong> kyle <br />
+        <strong>Password:</strong> testpassword
+      </div>
     </div>
   )
 }

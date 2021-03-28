@@ -1,0 +1,19 @@
+#login-title {
+  text-align: center;
+  padding: 0 0 10px 0;
+}
+
+.login-dropdown-group {
+  display: flex;
+  flex-direction: column;
+}
+
+#login-dropdown-form {
+  display: flex;
+  flex-direction: column;
+}
+
+#login-dropdown-text {
+  text-align: center;
+  margin: 20px;
+}
