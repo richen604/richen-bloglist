@@ -45,7 +45,6 @@
 
 .header-nav {
   min-width: 360px;
-  display: block;
   width: 100vw;
   height: 70px;
 }
@@ -53,11 +52,13 @@
 #nav-left-container {
   display: flex;
   justify-self: left;
-  justify-items: center;
+  justify-items: left;
   align-items: center;
+  min-width: 200px;
 }
 
 #nav-right-container {
+  min-width: 150;
   display: flex;
   justify-self: right;
   justify-items: right;
@@ -87,12 +88,6 @@
 .nav-links:hover {
   color: #ffc107;
   text-decoration: none;
-}
-
-#nav-spacer {
-  display: none;
-  width: 40%;
-  height: 80px;
 }
 
 #nav-user-info {
