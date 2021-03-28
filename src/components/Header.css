@@ -1,0 +1,144 @@
+/* for tablet*/
+@media only screen and (max-width: 599px) {
+  #nav-user-info {
+    display: none;
+  }
+  #nav-auth-button {
+    display: none;
+  }
+
+  #nav-dropdown-menu {
+    padding: 10px;
+    margin: 10px -7px 5px 0;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  #nav-auth-icon-button {
+    display: none;
+  }
+  #nav-auth-icon-dropdown {
+    display: none;
+  }
+
+  #nav-dropdown-menu {
+    padding: 10px;
+    margin: 18px -7px 5px 0;
+  }
+}
+
+/* for desktop*/
+@media only screen and (max-width: 786px) {
+  #nav-title {
+    display: none;
+  }
+}
+
+#nav-container {
+  min-width: 360px;
+  display: flex;
+  background-color: #17a2b8;
+  width: 100vw;
+  height: 70px;
+  justify-content: space-between;
+}
+
+.header-nav {
+  min-width: 360px;
+  display: block;
+  width: 100vw;
+  height: 70px;
+}
+
+#nav-left-container {
+  display: flex;
+  justify-self: left;
+  justify-items: center;
+  align-items: center;
+}
+
+#nav-right-container {
+  display: flex;
+  justify-self: right;
+  justify-items: right;
+  align-items: center;
+}
+
+#nav-logo {
+  padding: 0 12px 0 4px;
+  color: #cbf3f0;
+  width: 55px;
+  height: 55px;
+}
+
+#nav-title {
+  color: #ffffff;
+  padding: 0 24px 0 24px;
+  font-size: x-large;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.nav-links {
+  font-size: larger;
+  color: #ffffff;
+  padding: 0 8px 0 8px;
+}
+
+.nav-links:hover {
+  color: #ffc107;
+  text-decoration: none;
+}
+
+#nav-spacer {
+  display: none;
+  width: 40%;
+  height: 80px;
+}
+
+#nav-user-info {
+  font-size: larger;
+  color: #ffffff;
+  padding: 0 8px 0 8px;
+  width: 150px;
+  margin: 0;
+}
+
+#nav-auth-button {
+  color: #17a2b8;
+  font-size: larger;
+  background-color: #cbf3f0;
+  height: 40px;
+  width: 115px;
+  padding: 5px 10px 5px 10px;
+  margin: 0;
+  border: none;
+  border-radius: 13px;
+}
+
+#nav-auth-icon-button {
+  color: #cbf3f0;
+  background-color: #17a2b8;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+}
+
+#nav-auth-icon-dropdown {
+  background-color: #17a2b8;
+  border: none;
+}
+
+#nav-auth-button:hover {
+  background-color: #ffffff;
+}
+
+#nav-button-dropdown-container {
+  padding: 0;
+  margin: 0;
+}
+
+#nav-dropdown-menu {
+  width: 342px;
+  padding: 10px;
+}

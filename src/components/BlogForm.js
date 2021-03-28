@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react'
 import { hideNotify, showNotify } from '../reducers/notificationReducer'
-import {createBlog} from '../reducers/blogReducer'
+import { createBlog } from '../reducers/blogReducer'
 import { useDispatch } from 'react-redux'
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap'
 
@@ -37,7 +37,7 @@ export default function BlogForm({ user }) {
       }),
     )
 
-    dispatch(showNotify(`A new blog ${title} added!`, 'success'))
+    dispatch(showNotify(`A new blog ${title} added!`, 'success', 'blog'))
     setTimeout(() => {
       dispatch(hideNotify())
     }, 5000)
